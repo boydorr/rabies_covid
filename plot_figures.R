@@ -26,20 +26,6 @@ fig_4a <- read.csv("output/figure_4a.csv")
 fig_4b <- read.csv("output/figure_4b.csv")
 fig_4c <- read.csv("output/figure_4c.csv")
 
-#######################################################################
-# Fix names:
-# fig_1b$work_sector <- gsub("National policy making/government", "National government", fig_1b$work_sector)
-# fig_1b$work_sector <- gsub("Vaccine industry/logistics", "Industry", fig_1b$work_sector)
-# CONFIRM LOCAL GOVT (only in rabies-free settings - are they really not AH or PH or Lab?)?
-# CONFIRM programme management (only in endemic/ in-progress settings - are they really not AH or PH or Lab?)?
-# Regional organization (if this is PAHO or a subbranch of WHO I would, like for Asia pacific, I'd def put at Int. Organization)
-# What is other - can it really not be categorized?
-#
-# Note that the diamonds to highlight countries is now lost too!
-# CAN THE COLOUR PALATE USE "Free" NOT "Rabies-free"
-
-#######################################################################
-
 # Load shapefile
 world_shp <- read_sf("data/WHO Map boundaries/MapTemplate_detailed_2013/Shapefiles/detailed_2013.shp")
 
@@ -69,10 +55,8 @@ country_centroids <- country_centroids %>%
 
 fig_1a_plot = ggplot() +
   geom_sf(data=world_shp, fill="grey75", lwd=0.04, color="white") +
-  # geom_sf(data=world_shp, fill="white") +
   geom_sf(data=world_shp_data, aes(fill=endemic_status), color="white", lwd=0.04, alpha=0.8) +
-  scale_fill_manual(name="Dog-mediated rabies:", values = col_pal, labels=c("Endemic   ", "In-progress   ", "Free")) +
-  # scale_color_manual(name="Status of countries \nwith survey responses", values = col_pal, guide=guide_legend(order=1)) +
+  scale_fill_manual(name="Dog-mediated rabies:   ", values = col_pal, labels=c("Endemic   ", "In-progress   ", "Free")) +
   geom_sf(data=country_centroids, fill="black", shape=1, size=2.5, stroke=0.8) +
   coord_sf() +
   theme_void() +
@@ -116,20 +100,21 @@ fig_2c$endemic_status <- factor(fig_2c$endemic_status, levels=c("Endemic", "In-p
 
 fig_2a_plot = ggplot(data=fig_2a, aes(x=result, y=n, fill=endemic_status)) +
   geom_col(alpha=0.8)+
-  scale_fill_manual(name="Dog-mediated \n rabies status:",
+  scale_fill_manual(name="Dog-mediated   \nrabies:   ",
                     values = col_pal, guide=guide_legend(order=1)) +
   labs(title="Dog vaccination", x="", y="") +
   scale_y_continuous(limits=c(0,40)) +
   theme_classic() +
   theme(axis.title.x = element_blank(), legend.title = element_text(size=6),
-        legend.text = element_text(size=6), axis.title=element_text(size=7),
-        title = element_text(size = 7), axis.text = element_text(size=6))
+        legend.title.align = 1, legend.text = element_text(size=6),
+        axis.title=element_text(size=7), title = element_text(size = 7),
+        axis.text = element_text(size=6))
 
 #----- Produce panel 2b
 
 fig_2b_plot = ggplot(data=fig_2b, aes(x=result, y=n, fill=endemic_status)) +
   geom_col(alpha=0.8) +
-  scale_fill_manual(name="Dog-mediated rabies status:", values = col_pal, guide=guide_legend(order=1)) +
+  scale_fill_manual(values = col_pal, guide=guide_legend(order=1)) +
   labs(title="Post-exposure prophylaxis", x="", y="Respondents") +
   scale_y_continuous(limits=c(0,40)) +
   theme_classic() +
@@ -141,7 +126,7 @@ fig_2b_plot = ggplot(data=fig_2b, aes(x=result, y=n, fill=endemic_status)) +
 
 fig_2c_plot = ggplot(data=fig_2c, aes(x=result, y=n, fill=endemic_status)) +
   geom_col(alpha=0.8) +
-  scale_fill_manual(name="Dog-mediated rabies status:", values = col_pal, guide=guide_legend(order=1)) +
+  scale_fill_manual(values = col_pal, guide=guide_legend(order=1)) +
   labs(title="Awareness activities", x="", y="") +
   scale_y_continuous(limits=c(0,40)) +
   theme_classic() +
@@ -176,7 +161,7 @@ fig_3d$endemic_status <- factor(fig_3d$endemic_status, levels=c("Endemic", "In-p
 
 fig_3a_plot = ggplot(data=fig_3a, aes(x=grouped_response, y=n, fill=endemic_status)) +
   geom_col(alpha=0.8, width=0.9)+
-  scale_fill_manual(name="Dog-mediated rabies status:", values = col_pal, guide=guide_legend(order=1)) +
+  scale_fill_manual(name="Dog-mediated rabies:   ", values = col_pal, guide=guide_legend(order=1)) +
   labs(title="Dog vaccination", y="Countries\n") +
   scale_y_continuous(limits=c(0,30)) +
   theme_classic() +
@@ -189,7 +174,7 @@ fig_3a_plot = ggplot(data=fig_3a, aes(x=grouped_response, y=n, fill=endemic_stat
 
 fig_3b_plot = ggplot(data=fig_3b, aes(x=grouped_response, y=n, fill=endemic_status)) +
   geom_col(alpha=0.8)+
-  scale_fill_manual(name="Dog-mediated rabies status:", values = col_pal, guide=guide_legend(order=1)) +
+  scale_fill_manual(values = col_pal, guide=guide_legend(order=1)) +
   labs(title="Health seeking", y="Countries\n") +
   scale_y_continuous(limits=c(0,30)) +
   theme_classic() +
@@ -202,7 +187,7 @@ fig_3b_plot = ggplot(data=fig_3b, aes(x=grouped_response, y=n, fill=endemic_stat
 
 fig_3c_plot = ggplot(data=fig_3c, aes(x=grouped_response, y=n, fill=endemic_status)) +
   geom_col(alpha=0.8)+
-  scale_fill_manual(name="Dog-mediated rabies status:", values = col_pal, guide=guide_legend(order=1)) +
+  scale_fill_manual(values = col_pal, guide=guide_legend(order=1)) +
   labs(title="Post-exposure prophylaxis", y="Countries\n") +
   scale_y_continuous(limits=c(0,30)) +
   theme_classic() +
@@ -215,7 +200,7 @@ fig_3c_plot = ggplot(data=fig_3c, aes(x=grouped_response, y=n, fill=endemic_stat
 
 fig_3d_plot = ggplot(data=fig_3d, aes(x=grouped_response, y=n, fill=endemic_status)) +
   geom_col(alpha=0.8)+
-  scale_fill_manual(name="Dog-mediated rabies status:", values = col_pal, guide=guide_legend(order=1)) +
+  scale_fill_manual(values = col_pal, guide=guide_legend(order=1)) +
   labs(title="Surveillance", y="Countries\n") +
   scale_y_continuous(limits=c(0,30)) +
   theme_classic() +
@@ -250,14 +235,14 @@ fig_4c$endemic_status <- factor(fig_4c$endemic_status, levels=c("Endemic", "In-p
 
 fig_4a_plot = ggplot(data=fig_4a, aes(x=question, y=n, fill=endemic_status)) +
   geom_col(alpha=0.8, width=0.9)+
-  scale_fill_manual(name="Dog-mediated \nrabies status:", values = col_pal, guide=guide_legend(order=1)) +
+  scale_fill_manual(name="Dog-mediated \nrabies:   ", values = col_pal, guide=guide_legend(order=1)) +
   labs(title="Free-roaming dogs", y="") +
   scale_y_continuous(limits=c(0,30)) +
   theme_classic() +
   scale_x_discrete(limits=rev) +
   coord_flip() +
   theme(axis.title.y = element_blank(),
-      legend.title = element_text(size=6),
+      legend.title = element_text(size=6), legend.title.align = 1,
       legend.text = element_text(size=6), axis.title=element_text(size=7),
       title = element_text(size = 7), axis.text = element_text(size=6),
       plot.title.position = "plot", plot.title = element_text(hjust=0.1))
@@ -266,7 +251,7 @@ fig_4a_plot = ggplot(data=fig_4a, aes(x=question, y=n, fill=endemic_status)) +
 
 fig_4b_plot = ggplot(data=fig_4b, aes(x=question, y=n, fill=endemic_status)) +
   geom_col(alpha=0.8, width=0.9)+
-  scale_fill_manual(name="Dog-mediated rabies status:", values = col_pal, guide=guide_legend(order=1)) +
+  scale_fill_manual(values = col_pal, guide=guide_legend(order=1)) +
   labs(title="Human-dog interactions", y="") +
   scale_y_continuous(limits=c(0,30)) +
   theme_classic() +
@@ -282,7 +267,7 @@ fig_4b_plot = ggplot(data=fig_4b, aes(x=question, y=n, fill=endemic_status)) +
 
 fig_4c_plot = ggplot(data=fig_4c, aes(x=question, y=n, fill=endemic_status)) +
   geom_col(alpha=0.8, width=0.9)+
-  scale_fill_manual(name="Dog-mediated rabies status:", values = col_pal, guide=guide_legend(order=1)) +
+  scale_fill_manual(values = col_pal, guide=guide_legend(order=1)) +
   labs(title="Media reporting of dogs", y="Countries\n") +
   scale_y_continuous(limits=c(0,30)) +
   theme_classic() +
