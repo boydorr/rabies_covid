@@ -31,6 +31,7 @@ world_shp <- read_sf("data/WHO Map boundaries/MapTemplate_detailed_2013/Shapefil
 
 # Set colour palettes
 
+map_col_pal <- c("Endemic"="#f44336", "In-progress"="#f28b30", "Free"="#03658c", "No answers received"="grey75")
 col_pal <- c("Endemic"="#f44336", "In-progress"="#f28b30", "Free"="#03658c")
 
 #----- Produce figure 1 --------------------------------------------------------
@@ -56,7 +57,7 @@ country_centroids <- country_centroids %>%
 fig_1a_plot = ggplot() +
   geom_sf(data=world_shp, fill="grey75", lwd=0.04, color="white") +
   geom_sf(data=world_shp_data, aes(fill=endemic_status), color="white", lwd=0.04, alpha=0.8) +
-  scale_fill_manual(name="Dog-mediated rabies:   ", values = col_pal, labels=c("Endemic   ", "In-progress   ", "Free")) +
+  scale_fill_manual(name="Dog-mediated rabies:   ", values = map_col_pal, labels=c("Endemic   ", "In-progress   ", "Free   ", "No answers received")) +
   geom_sf(data=country_centroids, fill="black", shape=1, size=2.5, stroke=0.8) +
   coord_sf() +
   theme_void() +
@@ -75,8 +76,8 @@ fig_1b$endemic_status <- factor(fig_1b$endemic_status, levels=c("Endemic", "In-p
 
 fig_1b_plot = ggplot(data=fig_1b, aes(x=work_sector, y=n, fill=endemic_status)) +
   geom_col(alpha=0.8) + # colour="white",
-  scale_fill_manual(name="Status of countries \nwith survey responses", values = col_pal, guide=guide_legend(order=1)) +
-  labs(x="Work Sector", y="Respondents") +
+  scale_fill_manual(name="Status of countries \nwith survey responses", values = map_col_pal, guide=guide_legend(order=1)) +
+  labs(x="Respondents'\naffiliation", y="Respondents") +
   scale_x_discrete(limits=rev) +
   scale_y_continuous(limits=c(0,30)) +
   coord_flip() +
