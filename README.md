@@ -1,28 +1,11 @@
-## Analyses for Nadal et al. Frontiers
+# Impacts of COVID-19 on Canine Rabies Control Efforts
 
-# Heading
+[![DOI](https://zenodo.org/badge/450027458.svg)](https://zenodo.org/badge/latestdoi/450027458)
 
-1. Contents List 1
-1. Contents List 2
-    1. Contents List 2.1
-        1. Contents List 2.1.1
-    1. Contents List 2.2
-1. Contents List 3
+Code and data used in: Nadal D, Abela-Ridder B, Beeching S, Cleaveland S, Cronin K, Steenson R, & Hampson K. (2022)
+*The Impact of the First Year of the COVID-19 Pandemic on Canine Rabies Control Efforts: A Mixed-Methods Study of Observations about the Present and Lessons for the Future.* Frontiers in Veterinary Science. XX(XX):XXXXX citation and doi to be added
 
-## Subheading Level 1
-Some relevant text...
+Deidentified data are provided in the subfolder *data*. R scripts create and save tables to subfolder *output* and figures to subfolder *figs*, using a few functions in subfolder *R*.
 
-### Subheading Level 2
-Some relevant text...
+For more information about this work, please contact nadal.deborah@gmail.com
 
-#### Subheading Level 3
-Some relevant text...
-
-Add code inside backticks: `some code...`
-
-Make it bold with double asterix: **some bold text...**
-
-Use a single asterix for a bulleted list, and indent it for a second level:
-
-* List level 1
-  * List level 2
